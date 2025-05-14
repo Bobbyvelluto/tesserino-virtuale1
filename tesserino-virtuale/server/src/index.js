@@ -18,6 +18,6 @@ app.use('/api/admin', require('./routes/admin'));
 
 const PORT = process.env.PORT || 5000;
 
-app.listen(5050, () => {
-  console.log('Server in esecuzione sulla porta 5050');
+app.listen(PORT, () => {
+  console.log(`Server in esecuzione sulla porta ${PORT}`);
 }); 
