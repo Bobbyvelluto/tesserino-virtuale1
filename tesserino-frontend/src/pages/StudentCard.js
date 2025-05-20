@@ -529,4 +529,4 @@ function StudentCard() {
   );
 }
 
-export default StudentCard; // trigger redeploy
+export default StudentCard; 
