@@ -114,14 +114,16 @@ router.delete('/:id', async (req, res) => {
 
 // Aggiungi un nuovo tesserino a uno studente
 router.post('/:id/tesserini', async (req, res) => {
+  console.log('DEBUG numLessons:', req.body.numLessons);
   try {
     const student = await Student.findById(req.params.id);
     if (!student) {
       return res.status(404).json({ message: 'Studente non trovato' });
     }
+    const numLessons = req.body.numLessons || 10; // Default 10 se non specificato
     student.tesserini.push({
       attivatoIl: new Date(),
-      lessons: Array(10).fill().map(() => ({ isUsed: false }))
+      lessons: Array(numLessons).fill().map(() => ({ isUsed: false }))
     });
     await student.save();
     res.json(student);
