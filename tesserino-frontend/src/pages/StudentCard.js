@@ -163,102 +163,39 @@ function StudentCard() {
   }
 
   return (
-    <Container maxWidth="md" sx={{
-      p: 0, m: 0, minWidth: '100vw', minHeight: '100vh',
-      display: 'flex', flexDirection: { xs: 'column', md: 'row' }, alignItems: 'flex-start', justifyContent: 'center',
+    <Container maxWidth="sm" sx={{
+      display: 'flex',
+      flexDirection: 'column',
+      alignItems: 'center',
+      justifyContent: 'center',
+      minHeight: '100vh',
+      p: 0,
+      m: 0,
       bgcolor: '#fff8e1',
     }}>
-      <Box sx={{ flex: '0 0 auto', mb: { xs: 2, md: 0 }, mr: { md: 3, xs: 0 } }}>
-        {/* Popup istruzioni PWA */}
-        {showPwaHint && (
-          <Box sx={{
-            position: 'fixed',
-            top: 0,
-            left: 0,
-            width: '100vw',
-            height: '100vh',
-            bgcolor: 'rgba(0,0,0,0.45)',
-            zIndex: 9999,
-            display: 'flex',
-            alignItems: 'center',
-            justifyContent: 'center',
-          }}>
-            <Box sx={{
-              bgcolor: '#fff8e1',
-              borderRadius: 6,
-              boxShadow: '0 8px 32px #ff980088',
-              p: 4,
-              maxWidth: 370,
-              width: '92vw',
-              textAlign: 'center',
-              position: 'relative',
-              border: '4px solid #ff9800',
-              display: 'flex',
-              flexDirection: 'column',
-              alignItems: 'center',
-            }}>
-              <IconButton onClick={handleClosePwaHint} sx={{ position: 'absolute', top: 8, right: 8 }}>
-                <CloseIcon />
-              </IconButton>
-              <CardSVG />
-              <Typography variant="h5" sx={{ mb: 2, fontWeight: 900, color: '#d84315', letterSpacing: 2, fontFamily: 'Oswald, Impact, Arial, sans-serif', textShadow: '0 2px 8px #ff980088' }}>
-                Installa il tesserino come App!
-              </Typography>
-              <Typography variant="body1" sx={{ mb: 3, color: '#795548', fontWeight: 700, fontSize: 18 }}>
-                Per un accesso rapido e senza limiti, aggiungi il tesserino alla schermata Home:
-              </Typography>
-              <Box sx={{ textAlign: 'left', mb: 2, width: '100%' }}>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1 }}>
-                  <AppleIcon sx={{ color: '#222', fontSize: 28, mr: 1 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#ff9800', fontSize: 18 }}>iPhone (Safari):</Typography>
-                </Box>
-                <Typography variant="body2" sx={{ mb: 1, ml: 4, color: '#333', fontWeight: 600 }}>
-                  1. Tocca <ShareIcon sx={{ fontSize: 18, mb: '-3px', color: '#1976d2' }} /> <b>Condividi</b> in basso<br/>
-                  2. Scegli <b>Aggiungi a Home</b>
-                </Typography>
-                <Box sx={{ display: 'flex', alignItems: 'center', mb: 1, mt: 2 }}>
-                  <AndroidIcon sx={{ color: '#388e3c', fontSize: 28, mr: 1 }} />
-                  <Typography variant="subtitle2" sx={{ fontWeight: 700, color: '#388e3c', fontSize: 18 }}>Android (Chrome):</Typography>
-                </Box>
-                <Typography variant="body2" sx={{ mb: 1, ml: 4, color: '#333', fontWeight: 600 }}>
-                  1. Tocca <MenuSVG /> <b>Menu</b> in alto a destra<br/>
-                  2. Scegli <b>Aggiungi a schermata Home</b>
-                </Typography>
-              </Box>
-              <Box sx={{ display: 'flex', alignItems: 'center', justifyContent: 'center', mb: 1 }}>
-                <HandSVG />
-                <Typography variant="caption" sx={{ color: '#d84315', fontWeight: 700, letterSpacing: 1, fontSize: 16 }}>
-                  Vedrai l'icona "MY BOXING LESSONS" tra le tue app!
-                </Typography>
-              </Box>
-            </Box>
-          </Box>
-        )}
+      <Box sx={{
+        position: 'relative',
+        width: '100%',
+        maxWidth: 400,
+        minHeight: 500,
+        display: 'flex',
+        flexDirection: 'column',
+        alignItems: 'center',
+        justifyContent: 'flex-end',
+        mb: 2,
+      }}>
         {/* Sfondo immagine e overlay */}
         <img
           src="/main.jpg"
           alt="Boxe BG"
           style={{
-            position: 'absolute',
-            top: 0,
-            left: 0,
             width: '100%',
-            height: '100%',
-            objectFit: 'cover',
-            zIndex: 0,
+            height: 'auto',
             border: '4px solid #b71c1c',
             borderRadius: '8px',
+            display: 'block',
           }}
         />
-        <Box sx={{
-          position: 'absolute',
-          top: 0,
-          left: 0,
-          width: '100%',
-          height: '100%',
-          bgcolor: 'rgba(0,0,0,0.18)',
-          zIndex: 2,
-        }} />
         {/* Badge lezioni: mostra solo il numero effettivo di moduli del tesserino attivo */}
         <Box sx={{
           position: 'absolute',
@@ -272,100 +209,39 @@ function StudentCard() {
           justifyContent: 'center',
           gap: 0.5,
         }}>
-          {getLessons(student).map((lesson, lessonIndex) => {
-            const dateString = lesson.date ? new Date(lesson.date).toLocaleString('it-IT', { day: '2-digit', month: '2-digit', year: '2-digit', hour: '2-digit', minute: '2-digit' }) : '';
-            return lesson.isUsed ? (
-              <Tooltip key={lessonIndex} title={dateString ? `Lezione effettuata il ${dateString}` : ''} arrow>
-                <Box
-                  sx={{
-                    width: 38,
-                    height: 52,
-                    borderRadius: 6,
-                    bgcolor: yellowMod,
-                    border: '2.5px solid #aaa',
-                    boxShadow: 'none',
-                    opacity: 0.92,
-                    display: 'flex',
-                    alignItems: 'center',
-                    justifyContent: 'center',
-                    fontWeight: 700,
-                    fontSize: 18,
-                    color: '#d32f2f',
-                    mb: 0,
-                    transition: 'all 0.2s',
-                    boxSizing: 'border-box',
-                    cursor: 'pointer',
-                    position: 'relative',
-                  }}
-                  onClick={() => {}}
-                >
-                  <Box sx={{ background: 'orange', borderRadius: 3, px: 0.7, py: 0.2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                    ✗
-                  </Box>
-                  {localStorage.getItem('token') && (
-                    <button
-                      onClick={() => handleUndoLesson(lessonIndex)}
-                      style={{
-                        position: 'absolute',
-                        top: 2,
-                        right: 2,
-                        width: 18,
-                        height: 18,
-                        background: '#ff9800',
-                        color: '#fff',
-                        border: 'none',
-                        borderRadius: '50%',
-                        fontSize: 10,
-                        fontWeight: 700,
-                        cursor: 'pointer',
-                        boxShadow: '0 1px 4px #e6510022',
-                        display: 'flex',
-                        alignItems: 'center',
-                        justifyContent: 'center',
-                        zIndex: 10,
-                      }}
-                      title="Annulla lezione"
-                    >
-                      ↺
-                    </button>
-                  )}
-                </Box>
-              </Tooltip>
-            ) :
-              <Box
-                key={lessonIndex}
-                sx={{
-                  width: 38,
-                  height: 52,
-                  borderRadius: 6,
-                  bgcolor: yellowMod,
-                  border: '2.5px solid #43a047',
-                  boxShadow: '0 2px 8px #1976d233',
-                  opacity: 0.92,
-                  display: 'flex',
-                  alignItems: 'center',
-                  justifyContent: 'center',
-                  cursor: 'pointer',
-                  fontWeight: 700,
-                  fontSize: 18,
-                  color: '#1976d2',
-                  mb: 0,
-                  transition: 'all 0.2s',
-                  boxSizing: 'border-box',
-                  '&:hover': {
-                    boxShadow: '0 0 8px #43a047',
-                    transform: 'scale(1.08)',
-                    background: 'linear-gradient(135deg, #fffde7 0%, #fff9c4 100%)',
-                  },
-                }}
-                onClick={() => handleAvailableLessonClick(lessonIndex, lesson)}
-              >
-                <Box sx={{ background: 'orange', borderRadius: 3, px: 0.7, py: 0.2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
-                  {lessonIndex + 1}
-                </Box>
+          {getLessons(student).map((lesson, lessonIndex) => (
+            <Box
+              key={lessonIndex}
+              sx={{
+                width: 38,
+                height: 52,
+                borderRadius: 6,
+                bgcolor: yellowMod,
+                border: '2.5px solid #43a047',
+                boxShadow: '0 2px 8px #1976d233',
+                opacity: 0.92,
+                display: 'flex',
+                alignItems: 'center',
+                justifyContent: 'center',
+                cursor: 'pointer',
+                fontWeight: 700,
+                fontSize: 18,
+                color: '#1976d2',
+                mb: 0,
+                transition: 'all 0.2s',
+                boxSizing: 'border-box',
+                '&:hover': {
+                  boxShadow: '0 0 8px #43a047',
+                  transform: 'scale(1.08)',
+                  background: 'linear-gradient(135deg, #fffde7 0%, #fff9c4 100%)',
+                },
+              }}
+            >
+              <Box sx={{ background: 'orange', borderRadius: 3, px: 0.7, py: 0.2, display: 'flex', alignItems: 'center', justifyContent: 'center' }}>
+                {lessonIndex + 1}
               </Box>
-            ;
-          })}
+            </Box>
+          ))}
         </Box>
         {/* Nome allievo SOTTO i moduli, con padding e sfondo verde */}
         <Box sx={{
@@ -409,46 +285,7 @@ function StudentCard() {
           </Box>
         </Box>
       </Box>
-      <Box sx={{ flex: 1, minWidth: 260, maxWidth: 480, bgcolor: '#fff', borderRadius: 4, boxShadow: '0 2px 8px #1976d233', p: { xs: 2, md: 3 }, mt: { xs: 0, md: 2 } }}>
-        {/* Snackbar avviso annullamento modulo */}
-        <Snackbar
-          open={showUndoAlert && !localStorage.getItem('token')}
-          autoHideDuration={4000}
-          onClose={() => setShowUndoAlert(false)}
-          message={`Una lezione è stata annullata dall'amministratore. Ora puoi riutilizzare il modulo n°${undoLessonIndex !== null ? undoLessonIndex + 1 : ''}.`}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          sx={{
-            '& .MuiSnackbarContent-root': {
-              bgcolor: '#ff9800',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: 16,
-              borderRadius: 3,
-              boxShadow: '0 2px 8px #d8431555',
-              letterSpacing: 1,
-            }
-          }}
-        />
-        {/* Snackbar info lezione annullata (clic su modulo disponibile con data) */}
-        <Snackbar
-          open={showLessonInfo}
-          autoHideDuration={4000}
-          onClose={() => setShowLessonInfo(false)}
-          message={lessonInfo.number ? `Modulo n°${lessonInfo.number}: lezione effettuata il ${lessonInfo.date}` : ''}
-          anchorOrigin={{ vertical: 'bottom', horizontal: 'center' }}
-          sx={{
-            '& .MuiSnackbarContent-root': {
-              bgcolor: '#1976d2',
-              color: '#fff',
-              fontWeight: 700,
-              fontSize: 16,
-              borderRadius: 3,
-              boxShadow: '0 2px 8px #1976d255',
-              letterSpacing: 1,
-            }
-          }}
-        />
-      </Box>
+      {/* Snackbar avviso annullamento modulo e info lezione annullata rimangono per UX admin, ma non c'è più storico lezioni */}
     </Container>
   );
 }
